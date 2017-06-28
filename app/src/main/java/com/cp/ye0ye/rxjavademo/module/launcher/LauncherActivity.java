@@ -2,12 +2,10 @@ package com.cp.ye0ye.rxjavademo.module.launcher;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.module.home.HomeActivity;
@@ -75,7 +73,6 @@ public class LauncherActivity extends AppCompatActivity implements LauncherContr
         //Activity
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         finish();
-        Toast.makeText(this,"显示了goHome",Toast.LENGTH_SHORT).show();
     }
 
     @Override
