@@ -27,6 +27,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
@@ -117,6 +118,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public void startBannerLoadingAnim() {
         mFloatingActionButton.setImageResource(R.drawable.ic_loading);
+        mAnimatior = ObjectAnimator.ofFloat(mFloatingActionButton, "rotation", 0, 360);
         mAnimatior.setRepeatCount(ValueAnimator.INFINITE);
         mAnimatior.setDuration(800);
         mAnimatior.setInterpolator(new LinearInterpolator());
@@ -127,9 +129,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public void stopBannerLoadingAnim() {
         mFloatingActionButton.setImageResource(R.drawable.ic_beauty);
-        mAnimatior.clone();
+        mAnimatior.cancel();
         mFloatingActionButton.setRotation(0);
-
     }
 
     @Override

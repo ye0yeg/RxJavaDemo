@@ -79,7 +79,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showBannerFail("Banner Load Faild");
+                        mView.showBannerFail("Banner Load Faild"+e.toString());
                         mView.enableFabButton();
                         mView.stopBannerLoadingAnim();
                     }
@@ -91,7 +91,7 @@ public class HomePresenter implements HomeContract.Presenter {
                                 && categoryResult.results.get(0).url != null) {
                             mView.setBanner(categoryResult.results.get(0).url);
                         } else {
-                            mView.showBannerFail("Banner Load Faild");
+                            mView.showBannerFail("Banner Load Faild, OnNext");
                         }
                     }
                 });
