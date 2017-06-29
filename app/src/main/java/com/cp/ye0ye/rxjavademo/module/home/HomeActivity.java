@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 GlobalConfig.CATEGORY_NAME_FRONT_END,
                 GlobalConfig.CATEGORY_NAME_RECOMMEND,
                 GlobalConfig.CATEGORY_NAME_RESOURCE};
-        CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
+//        CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
 
     }
 

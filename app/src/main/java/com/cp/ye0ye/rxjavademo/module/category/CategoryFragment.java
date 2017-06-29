@@ -22,12 +22,12 @@ import butterknife.ButterKnife;
  * Created by Administrator on 6/29/2017.
  */
 
-public class CategoryFragment extends Fragment implements CategoryContract.View{
+public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,CategoryContract.View{
 
     @BindView(R.id.recycle_view)
     RecyclerViewWithFooter recyclerViewWithFooter;
     @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static final String CATEGORY_NAME = "com.cp.ye0ye.rxjavademo.module.category.CATEGORY_NAME";
     private CategoryContract.Presenter mPresenter = new CategoryPresenter(this);
@@ -51,9 +51,18 @@ public class CategoryFragment extends Fragment implements CategoryContract.View{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment,container,false);
         ButterKnife.bind(this,view);
+        mSwipeRefreshLayout.setColorSchemeResources(
+                R.color.colorSwipeRefresh1,
+                R.color.colorSwipeRefresh2,
+                R.color.colorSwipeRefresh3,
+                R.color.colorSwipeRefresh4,
+                R.color.colorSwipeRefresh5,
+                R.color.colorSwipeRefresh6);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+
         return view;
     }
 
@@ -89,6 +98,11 @@ public class CategoryFragment extends Fragment implements CategoryContract.View{
 
     @Override
     public void setLoading() {
+
+    }
+
+    @Override
+    public void onRefresh() {
 
     }
 }
