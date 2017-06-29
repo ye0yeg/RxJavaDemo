@@ -62,7 +62,7 @@ public class LauncherActivity extends AppCompatActivity implements LauncherContr
                         }
                     });
         }catch (Exception e){
-            goHomeActivity();
+
         }
     }
 

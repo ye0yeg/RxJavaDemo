@@ -66,7 +66,9 @@ public class HomePresenter implements HomeContract.Presenter {
         if (isRandom) {
             observable = NetWork.getGankApi().getRandomBeauties(1);
         } else {
-            observable = NetWork.getGankApi().getCategoryDate("福利", 1, 1);
+            observable = NetWork.getGankApi().getRandomBeauties(1);
+            //让第一张图也随机吧
+//            observable = NetWork.getGankApi().getCategoryDate("福利", 1, 1);
         }
         Subscription subscription = observable
                 .subscribeOn(Schedulers.io())

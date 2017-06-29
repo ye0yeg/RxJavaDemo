@@ -1,5 +1,7 @@
 package com.cp.ye0ye.rxjavademo.module.home;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.pm.ActivityInfo;
@@ -7,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +21,9 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.cp.ye0ye.rxjavademo.GlobalConfig;
 import com.cp.ye0ye.rxjavademo.R;
+import com.cp.ye0ye.rxjavademo.base.adapter.CommonViewPagerAdapter;
 import com.cp.ye0ye.rxjavademo.utils.DisplayUtils;
 import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 import com.github.florent37.picassopalette.PicassoPalette;
@@ -27,7 +32,6 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
@@ -36,7 +40,7 @@ import es.dmoral.toasty.Toasty;
  * Created by ye0ye on 2017/6/28.
  */
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
-
+    public final static int SETTING_REQUEST_CODE = 101;
     @BindView(R.id.fab_home_random)
     FloatingActionButton mFloatingActionButton;
     @BindView(R.id.appbar)
@@ -55,6 +59,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     AppCompatImageView mIvSetting;
 
     private HomeContract.Presenter mPresenter = new HomePresenter(this);
+    private boolean isBannerAniming;//是否正在缩放动画
+    private boolean isBannerBig;//是否大图
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +85,20 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                     mIvSetting.getPaddingRight(),
                     mIvSetting.getPaddingBottom());
         }
+
+        setFabDynamicState();
+
+        String[] titles = {
+                GlobalConfig.CATEGORY_NAME_APP,
+                GlobalConfig.CATEGORY_NAME_ANDROID,
+                GlobalConfig.CATEGORY_NAME_IOS,
+                GlobalConfig.CATEGORY_NAME_FRONT_END,
+                GlobalConfig.CATEGORY_NAME_RECOMMEND,
+                GlobalConfig.CATEGORY_NAME_RESOURCE};
+        CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
+
     }
+
 
     @Override
     public void showBannerFail(String failMessage) {
@@ -143,6 +162,21 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         mFloatingActionButton.setEnabled(false);
     }
 
+    @Override
+    public void setAppBarLayoutColor(int appBarLayoutColor) {
+        mCollapsingToolbarLayout.setContentScrimColor(appBarLayoutColor);
+        mAppBarLayout.setBackgroundColor(appBarLayoutColor);
+    }
+
+    @Override
+    public void setFabButtonColor(int color) {
+        MDTintUtil.setTint(mFloatingActionButton, color);
+
+    }
+
+    /*
+    * 随机pic
+    * */
     @OnClick(R.id.fab_home_random)
     public void random(View view) {
         mPresenter.getRandomBanner();
@@ -154,15 +188,76 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 //        startActivity(new Intent());
     }
 
-    @Override
-    public void setAppBarLayoutColor(int appBarLayoutColor) {
-        mCollapsingToolbarLayout.setContentScrimColor(appBarLayoutColor);
-        mAppBarLayout.setBackgroundColor(appBarLayoutColor);
+    @OnClick(R.id.iv_home_banner)
+    public void wantBig(View view) {
+        //是否在开始加载变大动画
+        if (isBannerAniming) {
+            return;
+        }
+        startBannerAnim();
     }
 
-    @Override
-    public void setFabButtonColor(int color) {
-        MDTintUtil.setTint(mFloatingActionButton, color);
+    private void startBannerAnim() {
+        final CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+        ValueAnimator animator;
+        if (isBannerBig) {
+            animator = ValueAnimator.ofInt(DisplayUtils.getScreenHeight(this), DisplayUtils.dp2px(240, this));
+        } else {
+            animator = ValueAnimator.ofInt(DisplayUtils.dp2px(240, this), DisplayUtils.getScreenHeight(this));
+        }
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                layoutParams.height = (int) valueAnimator.getAnimatedValue();
+                mAppBarLayout.setLayoutParams(layoutParams);
+            }
+        });
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isBannerBig = !isBannerBig;
+                isBannerAniming = false;
+            }
+        });
+        animator.start();
+        isBannerAniming = true;
+    }
 
+    private CollapsingToolbarLayoutState state;
+
+    private enum CollapsingToolbarLayoutState {
+        EXPANDED, // 完全展开
+        COLLAPSED, // 折叠
+        INTERNEDIATE // 中间状态
+    }
+
+    /*根据CollapingToolbarLayout的折叠状态，设置fab按钮的隐藏和展示*/
+    private void setFabDynamicState() {
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset == 0) {
+                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                        state = CollapsingToolbarLayoutState.EXPANDED;
+                    }
+                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                    mFloatingActionButton.hide();
+                    state = CollapsingToolbarLayoutState.COLLAPSED; //修改状态为折叠
+                    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+                    layoutParams.height = DisplayUtils.dp2px(240, HomeActivity.this);
+                    mAppBarLayout.setLayoutParams(layoutParams);
+                    isBannerBig = false;
+                } else {
+                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+                        if (state == CollapsingToolbarLayoutState.COLLAPSED) {
+                            mFloatingActionButton.show();
+                        }
+                        state = CollapsingToolbarLayoutState.INTERNEDIATE; //状态为中间
+                    }
+                }
+            }
+        });
     }
 }
