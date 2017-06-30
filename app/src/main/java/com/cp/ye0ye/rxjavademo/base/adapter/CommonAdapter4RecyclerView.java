@@ -13,8 +13,8 @@ import java.util.List;
  * Created by Administrator on 6/29/2017.
  */
 public abstract class CommonAdapter4RecyclerView<T> extends RecyclerView.Adapter {
-    private Context mContext;
-    private List<T> mData;
+    public Context mContext;
+    public List<T> mData;
     private int layoutId;
     private View mView;
 
@@ -29,6 +29,7 @@ public abstract class CommonAdapter4RecyclerView<T> extends RecyclerView.Adapter
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mView = inflater.inflate(layoutId, parent, false);
+        return new CommonHolder4RecyclerView(mView);
     }
 
     @Override
@@ -40,7 +41,7 @@ public abstract class CommonAdapter4RecyclerView<T> extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return 0;
+        return (mData != null) ? mData.size() : 0;
     }
 
     public abstract void convert(CommonHolder4RecyclerView holder, T t);

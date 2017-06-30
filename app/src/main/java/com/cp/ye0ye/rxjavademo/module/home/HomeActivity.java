@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import com.cp.ye0ye.rxjavademo.GlobalConfig;
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.adapter.CommonViewPagerAdapter;
+import com.cp.ye0ye.rxjavademo.module.category.CategoryFragment;
 import com.cp.ye0ye.rxjavademo.utils.DisplayUtils;
 import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 import com.github.florent37.picassopalette.PicassoPalette;
@@ -62,6 +63,13 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private boolean isBannerAniming;//是否正在缩放动画
     private boolean isBannerBig;//是否大图
 
+    private CategoryFragment appFragment;
+    private CategoryFragment androidFragment;
+    private CategoryFragment iOSFragment;
+    private CategoryFragment frontFragment;
+    private CategoryFragment referenceFragment;
+    private CategoryFragment resFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +103,33 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 GlobalConfig.CATEGORY_NAME_FRONT_END,
                 GlobalConfig.CATEGORY_NAME_RECOMMEND,
                 GlobalConfig.CATEGORY_NAME_RESOURCE};
-//        CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
+        CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
 
+        // App
+        appFragment = CategoryFragment.newInstance(titles[0]);
+        // Android
+        androidFragment = CategoryFragment.newInstance(titles[1]);
+        // iOS
+        iOSFragment = CategoryFragment.newInstance(titles[2]);
+        // 前端
+        frontFragment = CategoryFragment.newInstance(titles[3]);
+        // 瞎推荐
+        referenceFragment = CategoryFragment.newInstance(titles[4]);
+        // 拓展资源
+        resFragment = CategoryFragment.newInstance(titles[5]);
+
+
+        infoPagerAdapter.addFragment(appFragment);
+        infoPagerAdapter.addFragment(androidFragment);
+        infoPagerAdapter.addFragment(iOSFragment);
+        infoPagerAdapter.addFragment(frontFragment);
+        infoPagerAdapter.addFragment(referenceFragment);
+        infoPagerAdapter.addFragment(resFragment);
+
+
+        mVpCategory.setAdapter(infoPagerAdapter);
+        mDachshundTabLayout.setupWithViewPager(mVpCategory);
+        mVpCategory.setCurrentItem(1);
     }
 
 
@@ -142,9 +175,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         mAnimatior.setDuration(800);
         mAnimatior.setInterpolator(new LinearInterpolator());
         mAnimatior.start();
-
     }
-
     @Override
     public void stopBannerLoadingAnim() {
         mFloatingActionButton.setImageResource(R.drawable.ic_beauty);
