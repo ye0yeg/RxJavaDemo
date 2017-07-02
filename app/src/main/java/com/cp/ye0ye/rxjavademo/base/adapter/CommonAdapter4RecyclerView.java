@@ -26,7 +26,7 @@ public abstract class CommonAdapter4RecyclerView<T> extends RecyclerView.Adapter
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) mContext
+            LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mView = inflater.inflate(layoutId, parent, false);
         return new CommonHolder4RecyclerView(mView);
