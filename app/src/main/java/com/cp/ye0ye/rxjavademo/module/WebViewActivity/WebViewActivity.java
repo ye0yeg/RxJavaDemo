@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -18,12 +20,14 @@ import android.widget.TextView;
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.SwipeBackBaseActivity;
 import com.cp.ye0ye.rxjavademo.entity.Favorite;
+import com.cp.ye0ye.rxjavademo.utils.AndroidUtil;
 import com.cp.ye0ye.rxjavademo.utils.DisplayUtils;
 import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 import com.cp.ye0ye.rxjavademo.widget.ObservableWebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -193,4 +197,35 @@ public class WebViewActivity extends SwipeBackBaseActivity implements WebViewCon
             finish();
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_webview, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_share:
+                AndroidUtil.share(this, mPresenter.getGankUrl());
+                break;
+            case R.id.menu_copy_link:
+                if (AndroidUtil.copyText(this, mPresenter.getGankUrl())) {
+                    Toasty.success(this, "链接复制成功").show();
+                }
+                break;
+            case R.id.menu_open_with:
+                AndroidUtil.openWithBrowser(this, mPresenter.getGankUrl());
+                Toasty.success(this, "成功打开").show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.fab_web_favorite)
+    public void favorite(View view){
+        mPresenter.favoriteGank();
+    }
+
 }

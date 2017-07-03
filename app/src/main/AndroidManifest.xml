@@ -26,6 +26,9 @@
             android:name=".module.WebViewActivity.WebViewActivity"
             android:theme="@style/AppTheme.Transparent"
             />
+        <activity
+            android:name=".module.favorite.FavoriteActivity"
+            android:theme="@style/AppTheme.Transparent"/>
     </application>
 
 </manifest>

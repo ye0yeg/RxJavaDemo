@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.cp.ye0ye.rxjavademo.GlobalConfig;
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.adapter.CommonViewPagerAdapter;
 import com.cp.ye0ye.rxjavademo.module.category.CategoryFragment;
+import com.cp.ye0ye.rxjavademo.module.favorite.FavoriteActivity;
 import com.cp.ye0ye.rxjavademo.utils.DisplayUtils;
 import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 import com.github.florent37.picassopalette.PicassoPalette;
@@ -176,6 +178,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         mAnimatior.setInterpolator(new LinearInterpolator());
         mAnimatior.start();
     }
+
     @Override
     public void stopBannerLoadingAnim() {
         mFloatingActionButton.setImageResource(R.drawable.ic_beauty);
@@ -216,7 +219,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @OnClick(R.id.iv_home_collection)
     public void collection() {
         //打开收藏
-//        startActivity(new Intent());
+        startActivity(new Intent(HomeActivity.this, FavoriteActivity.class));
     }
 
     @OnClick(R.id.iv_home_banner)
