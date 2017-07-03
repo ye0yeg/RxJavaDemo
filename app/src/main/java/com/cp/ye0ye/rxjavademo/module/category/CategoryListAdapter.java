@@ -1,6 +1,7 @@
 package com.cp.ye0ye.rxjavademo.module.category;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.cp.ye0ye.rxjavademo.base.adapter.CommonAdapter4RecyclerView;
 import com.cp.ye0ye.rxjavademo.base.adapter.CommonHolder4RecyclerView;
 import com.cp.ye0ye.rxjavademo.base.adapter.ListenerWithPosition;
 import com.cp.ye0ye.rxjavademo.entity.CategoryResult;
+import com.cp.ye0ye.rxjavademo.entity.Favorite;
+import com.cp.ye0ye.rxjavademo.module.WebViewActivity.WebViewActivity;
 import com.cp.ye0ye.rxjavademo.utils.DateUtil;
 import com.squareup.picasso.Picasso;
 
@@ -73,5 +76,17 @@ public class CategoryListAdapter extends CommonAdapter4RecyclerView<CategoryResu
         if(mData == null || mData.get(position)==null){
             Toasty.error(mContext,"数据异常").show();
         }
+        Intent intent = new Intent(mContext, WebViewActivity.class);
+        intent.putExtra(WebViewActivity.GANK_TITLE, mData.get(position).desc);
+        intent.putExtra(WebViewActivity.GANK_URL, mData.get(position).url);
+        Favorite favorite = new Favorite();
+        favorite.setAuthor(mData.get(position).who);
+        favorite.setData(mData.get(position).publishedAt);
+        favorite.setTitle(mData.get(position).desc);
+        favorite.setType(mData.get(position).type);
+        favorite.setUrl(mData.get(position).url);
+        favorite.setGankID(mData.get(position)._id);
+        intent.putExtra(WebViewActivity.FAVORITE_DATA, favorite);
+        mContext.startActivity(intent);
     }
 }

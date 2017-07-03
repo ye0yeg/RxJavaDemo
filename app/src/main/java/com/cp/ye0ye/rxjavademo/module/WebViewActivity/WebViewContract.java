@@ -66,7 +66,7 @@ public interface WebViewContract {
         /**
          * 显示tip
          */
-        void showTip();
+        void showTip(String tip);
     }
 
     interface Presenter extends BasePresenter {
