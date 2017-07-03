@@ -27,6 +27,10 @@
             android:theme="@style/AppTheme.Transparent"
             />
         <activity
+            android:name=".module.search.SearchActivity"
+            android:theme="@style/AppTheme.Transparent"
+            />
+        <activity
             android:name=".module.favorite.FavoriteActivity"
             android:theme="@style/AppTheme.Transparent"/>
     </application>

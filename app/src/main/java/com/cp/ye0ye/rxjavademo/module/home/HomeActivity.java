@@ -27,6 +27,7 @@ import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.adapter.CommonViewPagerAdapter;
 import com.cp.ye0ye.rxjavademo.module.category.CategoryFragment;
 import com.cp.ye0ye.rxjavademo.module.favorite.FavoriteActivity;
+import com.cp.ye0ye.rxjavademo.module.search.SearchActivity;
 import com.cp.ye0ye.rxjavademo.utils.DisplayUtils;
 import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 import com.github.florent37.picassopalette.PicassoPalette;
@@ -229,6 +230,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             return;
         }
         startBannerAnim();
+    }
+
+    @OnClick(R.id.ll_home_search)
+    public void search(View view){
+        startActivity(new Intent(HomeActivity.this, SearchActivity.class));
     }
 
     private void startBannerAnim() {

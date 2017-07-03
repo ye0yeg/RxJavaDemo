@@ -20,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Administrator on 7/3/2017.
@@ -86,31 +87,33 @@ public class FavoriteActivity extends SwipeBackBaseActivity implements FavoriteC
     public void addFavoriteItems(final List<Favorite> favorites) {
         int start = mAdapter.getItemCount();
         mAdapter.mData.addAll(favorites);
-        mAdapter.notifyItemRangeInserted(start,favorites.size());
+        mAdapter.notifyItemRangeInserted(start, favorites.size());
     }
 
     @Override
     public void setFavoriteItems(final List<Favorite> favorites) {
         mAdapter.mData = favorites;
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setLoading() {
-
+        mRecyclerView.setLoading();
     }
 
     @Override
     public void setEmpty() {
-
+        mRecyclerView.setEmpty();
+        Toasty.info(this, "暂无收藏").show();
     }
 
     @Override
     public void setLoadMoreIsLastPage() {
-
+        mRecyclerView.setEnd("没有更多数据了!");
     }
 
     @Override
     public void onLoadMore() {
-
+        mPresenter.getFavoriteItems(false);
     }
 }
