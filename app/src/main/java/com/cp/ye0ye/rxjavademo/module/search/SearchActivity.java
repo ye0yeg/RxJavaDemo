@@ -29,6 +29,7 @@ import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 import com.cp.ye0ye.rxjavademo.widget.RecycleViewDivider;
 import com.cp.ye0ye.rxjavademo.widget.recyclerviewwithfooter.OnLoadMoreListener;
 import com.cp.ye0ye.rxjavademo.widget.recyclerviewwithfooter.RecyclerViewWithFooter;
+import com.google.android.flexbox.FlexboxLayoutManager;
 import com.luolc.emojirain.EmojiRainLayout;
 
 import java.util.List;
@@ -123,6 +124,12 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
         mRecyclerViewWithSearch.setOnLoadMoreListener(this);
         mRecyclerViewWithSearch.setEmpty();
 
+        mHistoryListAdapter = new HistoryListAdapter(this);
+
+        mHistoryListAdapter.setOnItemClickListener(this);
+        mHistoryListAdapter.mData = null;
+        mRecyclerViewHistory.setLayoutManager(new FlexboxLayoutManager());
+        mRecyclerViewHistory.setAdapter(mHistoryListAdapter);
         mEmojiRainLayout.addEmoji(R.mipmap.emoji1);
     }
 

@@ -122,19 +122,19 @@ public class SearchPresenter implements SearchContract.Presenter {
             return;
         }
         //支持更新
-//        List<History> historyList = DataSupport.where("content = ?", searchText).find(History.class);
-//        if (historyList == null || historyList.size() < 1) {
-//            //If its not here
-//            History history = new History();
-//            history.setCreateTimeMill(System.currentTimeMillis());
-//            history.setContent(searchText);
-//            history.save();
-//        } else {
-//            //更新
-//            History updateNews = new History();
-//            updateNews.setCreateTimeMill(System.currentTimeMillis());
-//            updateNews.updateAll("content = ?", searchText);
-//        }
+        List<History> historyList = DataSupport.where("content = ?", searchText).find(History.class);
+        if (historyList == null || historyList.size() < 1) {
+            //If its not here
+            History history = new History();
+            history.setCreateTimeMill(System.currentTimeMillis());
+            history.setContent(searchText);
+            history.save();
+        } else {
+            //更新
+            History updateNews = new History();
+            updateNews.setCreateTimeMill(System.currentTimeMillis());
+            updateNews.updateAll("content = ?", searchText);
+        }
     }
 
 
