@@ -33,6 +33,9 @@
         <activity
             android:name=".module.favorite.FavoriteActivity"
             android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".module.bigimg.BigimgActivity"
+            android:theme="@style/AppTheme.Transparent"/>
     </application>
 
 </manifest>

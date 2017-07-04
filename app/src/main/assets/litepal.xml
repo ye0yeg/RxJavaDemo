@@ -33,6 +33,7 @@
     -->
     <list>
         <mapping class="com.cp.ye0ye.rxjavademo.entity.Favorite" />
+        <mapping class="com.cp.ye0ye.rxjavademo.entity.History" />
     </list>
 
     <!--

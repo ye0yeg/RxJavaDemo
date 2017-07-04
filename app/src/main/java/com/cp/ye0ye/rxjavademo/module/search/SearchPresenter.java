@@ -5,9 +5,14 @@ import android.text.TextUtils;
 
 import com.cp.ye0ye.rxjavademo.GlobalConfig;
 import com.cp.ye0ye.rxjavademo.ThemeManage;
+import com.cp.ye0ye.rxjavademo.entity.History;
 import com.cp.ye0ye.rxjavademo.entity.SearchResult;
 import com.cp.ye0ye.rxjavademo.network.NetWork;
 import com.cp.ye0ye.rxjavademo.utils.EmojiFilter;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 import rx.Observer;
 import rx.Subscription;
@@ -102,17 +107,41 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void queryHistory() {
-
+        //展示查询所有，需要截取，去重的排序
+        List<History> historyList = DataSupport.order("createTimeMill desc").limit(10).find(History.class);
+        //将查询的结果转为list对象
+        if (historyList == null || historyList.size() < 1) {
+            mView.showSearchResult();
+        } else {
+            mView.setHistory(historyList);
+        }
     }
 
     private void saveOneHistory(String searchText) {
-
+        if (TextUtils.isEmpty(searchText)) {
+            return;
+        }
+        //支持更新
+//        List<History> historyList = DataSupport.where("content = ?", searchText).find(History.class);
+//        if (historyList == null || historyList.size() < 1) {
+//            //If its not here
+//            History history = new History();
+//            history.setCreateTimeMill(System.currentTimeMillis());
+//            history.setContent(searchText);
+//            history.save();
+//        } else {
+//            //更新
+//            History updateNews = new History();
+//            updateNews.setCreateTimeMill(System.currentTimeMillis());
+//            updateNews.updateAll("content = ?", searchText);
+//        }
     }
-
 
 
     @Override
     public void deleteAllHistory() {
+        DataSupport.deleteAll(History.class);
+        mView.showSearchResult();
 
     }
 }
