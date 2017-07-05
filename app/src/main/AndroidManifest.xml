@@ -3,6 +3,7 @@
           package="com.cp.ye0ye.rxjavademo">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -36,6 +37,7 @@
         <activity
             android:name=".module.bigimg.BigimgActivity"
             android:theme="@style/AppTheme.Transparent"/>
+        <activity android:name=".module.setting.SettingActivity"/>
     </application>
 
 </manifest>

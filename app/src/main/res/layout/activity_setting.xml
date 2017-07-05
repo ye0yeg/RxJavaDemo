@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorActivityBackground"
+              android:orientation="vertical"
+              tools:context=".module.setting.SettingActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_setting"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Setting"
+            app:titleTextColor="@android:color/white"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="基本设置"
+                    android:textColor="@color/colorTextEnableGary"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorLine"/>
+
+            <LinearLayout
+                android:id="@+id/ll_is_show_list_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:paddingLeft="15dp"
+                >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="显示缩略图"
+                    android:textColor="@color/colorTextEnable"
+                    android:textSize="15sp"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorLine"/>
+
+            <LinearLayout
+                android:id="@+id/ll_setting_image_quality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_setting_image_quality_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="设置质量"
+                    android:textColor="@color/colorTextEnable"
+                    android:textSize="15sp"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_setting_image_quality_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="提升质量返回生效，降低质量刷新列表生效"
+                    android:textColor="@color/colorTextEnableGary"
+                    android:textSize="12sp"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_setting_image_quality_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="高品质"
+                    android:textColor="@color/colorTextEnableGary"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#F5F5F5"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_is_show_launcher_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="启动页妹子图"
+                        android:textColor="@color/colorTextEnable"
+                        android:textSize="15sp"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_is_show_launcher_img_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="基佬怎么会需要妹子"
+                        android:textColor="@color/colorTextEnableGary"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_setting_show_launcher_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorLine"/>
+
+            <LinearLayout
+                android:id="@+id/ll_is_always_show_launcher_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_is_always_show_launcher_img_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="概率出现"
+                        android:textColor="@color/colorTextEnable"
+                        android:textSize="15sp"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_is_always_show_launcher_img_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我每次都要幸临，没毛病"
+                        android:textColor="@color/colorTextEnableGary"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_setting_always_show_launcher_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F5F5F5"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="更多"
+                    android:textColor="@color/colorTextEnableGary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorLine"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_setting_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="about"
+                        android:textColor="@color/colorTextEnable"
+                        android:textSize="15sp"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_setting_version_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Version"
+                        android:textColor="@color/colorTextEnableGary"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_right"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorLine"/>
+
+            <LinearLayout
+                android:id="@+id/ll_setting_clean_cache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="清理缓存"
+                        android:textColor="@color/colorTextEnable"
+                        android:textSize="15sp"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_setting_clean_cache"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/colorTextEnableGary"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_right"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorLine"/>
+
+            <LinearLayout
+                android:id="@+id/ll_setting_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Donate"
+                        android:textColor="@color/colorTextEnable"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_right"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorLine"/>
+
+            <LinearLayout
+                android:id="@+id/ll_setting_issues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FeedBack"
+                    android:textColor="@color/colorTextEnable"
+                    android:textSize="12sp"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="https://issues"
+                    android:textColor="@color/colorTextEnableGary"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_right"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/colorLine"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

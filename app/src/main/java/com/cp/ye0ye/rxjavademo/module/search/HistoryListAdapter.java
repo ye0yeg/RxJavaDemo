@@ -9,7 +9,6 @@ import com.cp.ye0ye.rxjavademo.base.adapter.CommonHolder4RecyclerView;
 import com.cp.ye0ye.rxjavademo.base.adapter.ListenerWithPosition;
 import com.cp.ye0ye.rxjavademo.entity.History;
 
-import java.util.List;
 
 /**
  * Created by Administrator on 7/4/2017.

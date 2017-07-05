@@ -42,7 +42,10 @@ import es.dmoral.toasty.Toasty;
 /**
  * Created by ye0ye on 2017/7/3.
  */
-public class SearchActivity extends SwipeBackBaseActivity implements SearchContract.View, TextWatcher, TextView.OnEditorActionListener, OnLoadMoreListener {
+public class SearchActivity extends SwipeBackBaseActivity implements SearchContract.View
+        , TextWatcher
+        , TextView.OnEditorActionListener
+        , OnLoadMoreListener, HistoryListAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar_search)
     Toolbar mToolbarSearch;
@@ -80,7 +83,8 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
         initView();
         //发布
         mPresenter.subscribe();
-        //查询历史 TODO
+        mPresenter.queryHistory();
+
     }
 
     private void initView() {
@@ -123,7 +127,6 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
         mRecyclerViewWithSearch.setAdapter(mSearchListAdapter);
         mRecyclerViewWithSearch.setOnLoadMoreListener(this);
         mRecyclerViewWithSearch.setEmpty();
-
         mHistoryListAdapter = new HistoryListAdapter(this);
 
         mHistoryListAdapter.setOnItemClickListener(this);
@@ -223,6 +226,8 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
     @Override
     public void setHistory(final List<History> history) {
         //Search History.
+        mHistoryListAdapter.mData = history;
+        mHistoryListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -257,6 +262,11 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
         mPresenter.search(mEdSearch.getText().toString().trim(), false);
     }
 
+    @OnClick(R.id.tv_search_clean)
+    public void clearnHistory() {
+        mPresenter.deleteAllHistory();
+    }
+
     @Override
     public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 
@@ -269,7 +279,18 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
 
     @Override
     public void afterTextChanged(final Editable editable) {
-
+        if (editable.length() > 0) {
+            showEditClear();
+        } else {
+            hideEditClear();
+            hideSwipLoading();
+            mPresenter.unsubscribe();
+            mRecyclerViewWithSearch.setEmpty();
+            mSearchListAdapter.mData = null;
+            mSearchListAdapter.notifyDataSetChanged();
+            showSearchHistory();
+            mPresenter.queryHistory();
+        }
     }
 
     @Override
@@ -280,4 +301,14 @@ public class SearchActivity extends SwipeBackBaseActivity implements SearchContr
         return false;
     }
 
+    @Override
+    public void OnItemClick(final History history) {
+        if (history == null || history.getContent() == null) {
+            return;
+        }
+        KeyboardUtils.hideSoftInput(this);
+        mEdSearch.setText(history.getContent());
+        mEdSearch.setSelection(mEdSearch.getText().toString().length());
+        mPresenter.search(history.getContent(), false);
+    }
 }

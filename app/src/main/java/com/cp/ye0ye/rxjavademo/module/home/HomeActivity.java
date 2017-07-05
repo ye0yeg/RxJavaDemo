@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import com.cp.ye0ye.rxjavademo.GlobalConfig;
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.adapter.CommonViewPagerAdapter;
+import com.cp.ye0ye.rxjavademo.module.setting.SettingActivity;
 import com.cp.ye0ye.rxjavademo.module.category.CategoryFragment;
 import com.cp.ye0ye.rxjavademo.module.favorite.FavoriteActivity;
 import com.cp.ye0ye.rxjavademo.module.search.SearchActivity;
@@ -230,6 +231,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             return;
         }
         startBannerAnim();
+    }
+
+    @OnClick(R.id.iv_home_setting)
+    public void goSetting() {
+        startActivityForResult(new Intent(HomeActivity.this, SettingActivity.class), SETTING_REQUEST_CODE);
     }
 
     @OnClick(R.id.ll_home_search)

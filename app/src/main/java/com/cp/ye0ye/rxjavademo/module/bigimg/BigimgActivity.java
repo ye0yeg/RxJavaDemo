@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
  */
 public class BigimgActivity extends SwipeBackBaseActivity implements BigimgContract.View {
 
-
     public static final String MEIZI_URL = "com.cp.ye0ye.rxjavademo.module.bigimg.BigimgActivity.meizi_url";
     public static final String MEIZI_TITLE = "com.cp.ye0ye.rxjavademo.module.bigimg.BigimgActivity.meizi_title";
 
@@ -39,7 +38,7 @@ public class BigimgActivity extends SwipeBackBaseActivity implements BigimgContr
     @BindView(R.id.sl_big_img_loading)
     SquareLoading mSquareLoading;
 
-    private BigimgContract.Presenter mPresenter = new BigimgPresenter(this);
+    private BigimgContract.Presenter mPresenter = new BigimgPresenter(this, BigimgActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +61,15 @@ public class BigimgActivity extends SwipeBackBaseActivity implements BigimgContr
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        imgBig.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View view) {
+                Bundle bundle = getIntent().getExtras();
+                String url = bundle.getString(BigimgActivity.MEIZI_URL);
+                mPresenter.saveImg(url);
+                return false;
             }
         });
         mPresenter.subscribe();
@@ -126,4 +134,5 @@ public class BigimgActivity extends SwipeBackBaseActivity implements BigimgContr
         Bundle bundle = getIntent().getExtras();
         return bundle.getString(BigimgActivity.MEIZI_TITLE);
     }
+
 }
