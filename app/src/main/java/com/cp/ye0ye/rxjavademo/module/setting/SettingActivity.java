@@ -1,9 +1,10 @@
 package com.cp.ye0ye.rxjavademo.module.setting;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.SwipeBackBaseActivity;
+import com.cp.ye0ye.rxjavademo.utils.AlipayZeroSdk;
 import com.cp.ye0ye.rxjavademo.utils.DisplayUtils;
 import com.cp.ye0ye.rxjavademo.utils.MDTintUtil;
 
@@ -28,8 +30,6 @@ import es.dmoral.toasty.Toasty;
  * Created by Administrator on 7/5/2017.
  */
 public class SettingActivity extends SwipeBackBaseActivity implements SettingContract.View, CompoundButton.OnCheckedChangeListener {
-
-    private SettingContract.Presenter mPresenter = new SettingPresenter(this);
 
     @BindView(R.id.toolbar_setting)
     Toolbar mToolbarSetting;
@@ -62,6 +62,7 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
     @BindView(R.id.tv_is_show_launcher_img_content)
     AppCompatTextView mTvShowLauncherImgContent;
 
+    private SettingPresenter mSettingPresenter = new SettingPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,6 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
                     mAppbarSetting.getPaddingTop() + DisplayUtils.getStatusBarHeight(this),
                     mAppbarSetting.getPaddingRight(),
                     mAppbarSetting.getPaddingBottom());
-
         }
         setSupportActionBar(mToolbarSetting);
         if (getSupportActionBar() != null) {
@@ -90,47 +90,83 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
         mSwitchSetting.setOnCheckedChangeListener(this);
         mSwitchSettingShowLauncherImg.setOnCheckedChangeListener(this);
         mSwitchSettingAlwaysShowLauncherImg.setOnCheckedChangeListener(this);
-        mPresenter.subscribe();
+        mSettingPresenter.subscribe();
     }
 
     @Override
     public void onBackPressed() {
-        if (mPresenter.isThumbnailSettingChanged()) {
+        if (mSettingPresenter.isThumbnailSettingChanged()) { // 显示缩略图设置项改变
             setResult(RESULT_OK);
         }
         super.onBackPressed();
     }
 
     @Override
-    public void setToolbarBackgroundColor(final int color) {
-        mAppbarSetting.setBackgroundColor(color);
+    protected void onDestroy() {
+        super.onDestroy();
+        mSettingPresenter.unsubscribe();
+    }
+
+    @OnClick(R.id.ll_is_show_list_img)
+    public void changSwitchState(View view) {
+        mSwitchSetting.setChecked(!mSwitchSetting.isChecked());
+    }
+
+    @OnClick(R.id.ll_is_show_launcher_img)
+    public void isShowLauncherImg() {
+        mSwitchSettingShowLauncherImg.setChecked(!mSwitchSettingShowLauncherImg.isChecked());
+    }
+
+    @OnClick(R.id.ll_is_always_show_launcher_img)
+    public void isAlwaysShowLauncherImg() {
+        mSwitchSettingAlwaysShowLauncherImg.setChecked(!mSwitchSettingAlwaysShowLauncherImg.isChecked());
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        switch (compoundButton.getId()) {
+            case R.id.switch_setting:
+                mSettingPresenter.saveIsListShowImg(isChecked);
+                break;
+            case R.id.switch_setting_show_launcher_img:
+                mSettingPresenter.saveIsLauncherShowImg(isChecked);
+                break;
+            case R.id.switch_setting_always_show_launcher_img:
+                mSettingPresenter.saveIsLauncherAlwaysShowImg(isChecked);
+                break;
+        }
 
     }
 
     @Override
-    public void changeSwitchState(final boolean isChecked) {
+    public void setToolbarBackgroundColor(int color) {
+        mAppbarSetting.setBackgroundColor(color);
+    }
+
+    @Override
+    public void changeSwitchState(boolean isChecked) {
         mSwitchSetting.setChecked(isChecked);
     }
 
     @Override
-    public void changeIsShowLauncherImgSwitchState(final boolean isChecked) {
+    public void changeIsShowLauncherImgSwitchState(boolean isChecked) {
         mSwitchSettingShowLauncherImg.setChecked(isChecked);
     }
 
     @Override
-    public void changeIsAlwaysShowLauncherImgSwitchState(final boolean isChecked) {
+    public void changeIsAlwaysShowLauncherImgSwitchState(boolean isChecked) {
         mSwitchSettingAlwaysShowLauncherImg.setChecked(isChecked);
     }
 
     @Override
-    public void setSwitchCompatsColor(final int color) {
+    public void setSwitchCompatsColor(int color) {
         MDTintUtil.setTint(mSwitchSetting, color);
         MDTintUtil.setTint(mSwitchSettingShowLauncherImg, color);
         MDTintUtil.setTint(mSwitchSettingAlwaysShowLauncherImg, color);
     }
 
     @Override
-    public void setAppVersionNameInTv(final String versionName) {
+    public void setAppVersionNameInTv(String versionName) {
         mTvSettingVersionName.setText("版本: " + versionName);
     }
 
@@ -140,7 +176,6 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
         mTvImageQualityTitle.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
         mTvImageQualityContent.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
         mTvImageQualityTip.setTextColor(getResources().getColor(R.color.colorTextUnEnable));
-
     }
 
     @Override
@@ -149,7 +184,6 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
         mTvImageQualityTitle.setTextColor(getResources().getColor(R.color.colorTextEnable));
         mTvImageQualityContent.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
         mTvImageQualityTip.setTextColor(getResources().getColor(R.color.colorTextEnableGary));
-
     }
 
     @Override
@@ -169,7 +203,7 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
     }
 
     @Override
-    public void setThumbnailQualityInfo(final int quality) {
+    public void setThumbnailQualityInfo(int quality) {
         String thumbnailQuality = "";
         switch (quality) {
             case 0:
@@ -186,46 +220,47 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
     }
 
     @Override
-    public void showCacheSize(final String cache) {
+    public void showCacheSize(String cache) {
         mTvCleanCache.setText(cache);
     }
 
     @Override
-    public void showSuccessTip(final String msg) {
+    public void showSuccessTip(String msg) {
         Toasty.success(this, msg).show();
     }
 
     @Override
-    public void showFailTip(final String msg) {
+    public void showFailTip(String msg) {
         Toasty.error(this, msg).show();
     }
 
     @Override
-    public void setShowLauncherTip(final String tip) {
+    public void setShowLauncherTip(String tip) {
         mTvShowLauncherImgContent.setText(tip);
     }
 
     @Override
-    public void setAlwaysShowLauncherTip(final String tip) {
+    public void setAlwaysShowLauncherTip(String tip) {
         mTvAlwaysShowLauncherImgContent.setText(tip);
     }
+
     @OnClick(R.id.ll_setting_image_quality)
-    public void chooseThumbnailQualty(){
+    public void chooseThumbnailQuality() {
         new MaterialDialog.Builder(this)
                 .title("缩略图质量")
-                .items("ORANGE","TAKE IT","SAVE IT")
-                .widgetColor(mPresenter.getColorPrimary())
+                .items("原图", "默认", "省流")
+                .widgetColor(mSettingPresenter.getColorPrimary())
                 .alwaysCallSingleChoiceCallback()
-                .itemsCallbackSingleChoice(mPresenter.getThumbnailQuality(), new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(mSettingPresenter.getThumbnailQuality(), new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        mPresenter.setThumbnailQuality(which);
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        mSettingPresenter.setThumbnailQuality(which);
                         dialog.dismiss();
                         return true;
                     }
                 })
                 .positiveText("取消")
-                .positiveColor(mPresenter.getColorPrimary())
+                .positiveColor(mSettingPresenter.getColorPrimary())
                 .show();
     }
 
@@ -233,13 +268,29 @@ public class SettingActivity extends SwipeBackBaseActivity implements SettingCon
     public void about() {
 //        new AboutDialog(this, mSettingPresenter.getColorPrimary()).show();
     }
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-    }
     @OnClick(R.id.ll_setting_clean_cache)
     public void cleanCache() {
-        mPresenter.cleanCache();
+        mSettingPresenter.cleanCache();
+    }
+
+    @OnClick(R.id.ll_setting_issues)
+    public void issues() {
+        Uri uri = Uri.parse("https://github.com/Bakumon/UGank/issues");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.ll_setting_pay)
+    public void pay() {
+        // https://fama.alipay.com/qrcode/qrcodelist.htm?qrCodeType=P  二维码地址
+        // http://cli.im/deqr/ 解析二维码
+        // aex01251c8foqaprudcp503
+        if (AlipayZeroSdk.hasInstalledAlipayClient(this)) {
+            AlipayZeroSdk.startAlipayClient(this, "null");
+        } else {
+            Toasty.info(this, "谢谢，您没有安装支付宝客户端").show();
+        }
     }
 
 }

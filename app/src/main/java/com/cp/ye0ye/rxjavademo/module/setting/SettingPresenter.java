@@ -45,7 +45,6 @@ public class SettingPresenter implements SettingContract.Presenter {
         } else {
             mView.setShowLauncherTip("TURN OFF");
         }
-
     }
 
 
