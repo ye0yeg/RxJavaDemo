@@ -11,6 +11,10 @@ import rx.Observable;
  * Created by Administrator on 6/28/2017.
  */
 public interface GankApi {
+
+    /**
+     * 返回的是JSON
+     * */
     @GET("data/{category}/{number}/{page}")
     Observable<CategoryResult> getCategoryDate(@Path("category") String category, @Path("number") int number, @Path("page") int page);
 

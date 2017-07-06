@@ -23,7 +23,9 @@ public class NetWork {
     public static GankApi getGankApi() {
         if (gankApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
+                    //使用okHttpClient请求
                     .client(okHttpClient)
+                    //基Url
                     .baseUrl("http://gank.io/api/")
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
