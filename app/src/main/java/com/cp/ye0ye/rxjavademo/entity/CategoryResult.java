@@ -8,7 +8,16 @@ import java.util.List;
 
 public class CategoryResult {
 
+
+
+    /**
+    * 这是获取的Json字段中的是否成功
+    * */
     public boolean error;
+
+    /**
+     * Json中的List实际数据
+     * */
     public List<ResultsBean> results;
 
     public static class ResultsBean {

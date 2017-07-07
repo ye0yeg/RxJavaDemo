@@ -14,7 +14,7 @@ import com.cp.ye0ye.rxjavademo.base.adapter.CommonHolder4RecyclerView;
 import com.cp.ye0ye.rxjavademo.base.adapter.ListenerWithPosition;
 import com.cp.ye0ye.rxjavademo.entity.CategoryResult;
 import com.cp.ye0ye.rxjavademo.entity.Favorite;
-import com.cp.ye0ye.rxjavademo.module.WebViewActivity.WebViewActivity;
+import com.cp.ye0ye.rxjavademo.module.webview.WebViewActivity;
 import com.cp.ye0ye.rxjavademo.utils.DateUtil;
 import com.squareup.picasso.Picasso;
 

@@ -1,4 +1,4 @@
-package com.cp.ye0ye.rxjavademo.module.WebViewActivity;
+package com.cp.ye0ye.rxjavademo.module.webview;
 
 import android.content.pm.ActivityInfo;
 import android.os.Build;

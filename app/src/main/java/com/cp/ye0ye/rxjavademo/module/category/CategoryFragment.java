@@ -41,13 +41,12 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
     public static CategoryFragment newInstance(String mCategoryName) {
         CategoryFragment categoryFragment = new CategoryFragment();
 
+        //传递参数
         Bundle bundle = new Bundle();
         bundle.putString(CATEGORY_NAME, mCategoryName);
-
         categoryFragment.setArguments(bundle);
         return categoryFragment;
     }
-
 
     public static final String CATEGORY_NAME = "com.cp.ye0ye.rxjavademo.module.category.CATEGORY_NAME";
     private CategoryContract.Presenter mPresenter = new CategoryPresenter(this);

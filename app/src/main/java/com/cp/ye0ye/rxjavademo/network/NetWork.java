@@ -1,6 +1,7 @@
 package com.cp.ye0ye.rxjavademo.network;
 
 import com.cp.ye0ye.rxjavademo.network.api.GankApi;
+import com.cp.ye0ye.rxjavademo.network.jsoupapi.JsoupApi;
 
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
@@ -15,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetWork {
     private static GankApi gankApi;
+    private static JsoupApi jsoupApi;
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();

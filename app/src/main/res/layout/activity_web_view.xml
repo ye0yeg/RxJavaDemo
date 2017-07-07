@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorActivityBackground"
     android:orientation="vertical"
-    tools:context=".module.WebViewActivity.WebViewActivity"
+    tools:context=".module.webview.WebViewActivity"
     >
 
     <android.support.design.widget.AppBarLayout

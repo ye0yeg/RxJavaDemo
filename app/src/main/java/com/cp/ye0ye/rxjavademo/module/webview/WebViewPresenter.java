@@ -1,4 +1,4 @@
-package com.cp.ye0ye.rxjavademo.module.WebViewActivity;
+package com.cp.ye0ye.rxjavademo.module.webview;
 
 import com.cp.ye0ye.rxjavademo.ThemeManage;
 import com.cp.ye0ye.rxjavademo.entity.Favorite;

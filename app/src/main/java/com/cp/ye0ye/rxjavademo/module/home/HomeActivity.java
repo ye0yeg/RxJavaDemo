@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import com.cp.ye0ye.rxjavademo.GlobalConfig;
 import com.cp.ye0ye.rxjavademo.R;
 import com.cp.ye0ye.rxjavademo.base.adapter.CommonViewPagerAdapter;
+import com.cp.ye0ye.rxjavademo.module.jsoupfragment.HTWFragment;
 import com.cp.ye0ye.rxjavademo.module.setting.SettingActivity;
 import com.cp.ye0ye.rxjavademo.module.category.CategoryFragment;
 import com.cp.ye0ye.rxjavademo.module.favorite.FavoriteActivity;
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private CategoryFragment frontFragment;
     private CategoryFragment referenceFragment;
     private CategoryFragment resFragment;
+    private HTWFragment mHtwFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,7 +108,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 GlobalConfig.CATEGORY_NAME_IOS,
                 GlobalConfig.CATEGORY_NAME_FRONT_END,
                 GlobalConfig.CATEGORY_NAME_RECOMMEND,
-                GlobalConfig.CATEGORY_NAME_RESOURCE};
+                GlobalConfig.CATEGORY_NAME_RESOURCE
+                , "HTW"};
         CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
 
         // App
@@ -122,6 +125,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         // 拓展资源
         resFragment = CategoryFragment.newInstance(titles[5]);
 
+        mHtwFragment = new HTWFragment();
+
 
         infoPagerAdapter.addFragment(appFragment);
         infoPagerAdapter.addFragment(androidFragment);
@@ -129,6 +134,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         infoPagerAdapter.addFragment(frontFragment);
         infoPagerAdapter.addFragment(referenceFragment);
         infoPagerAdapter.addFragment(resFragment);
+        infoPagerAdapter.addFragment(mHtwFragment);
 
 
         mVpCategory.setAdapter(infoPagerAdapter);
@@ -239,7 +245,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     }
 
     @OnClick(R.id.ll_home_search)
-    public void search(View view){
+    public void search(View view) {
         startActivity(new Intent(HomeActivity.this, SearchActivity.class));
     }
 

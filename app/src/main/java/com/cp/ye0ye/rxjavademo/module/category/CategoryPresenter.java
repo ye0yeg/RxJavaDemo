@@ -65,6 +65,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                     @Override
                     public void onNext(CategoryResult categoryResult) {
                         if (isRefresh) {
+                            //categoryResult 中有一个String 和一个 集合
                             mView.setCategoryItems(categoryResult);
                             mView.hideSwipeLoading();
                             mView.setLoading();

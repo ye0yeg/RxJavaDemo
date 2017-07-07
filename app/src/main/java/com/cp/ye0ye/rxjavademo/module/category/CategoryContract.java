@@ -52,5 +52,8 @@ public interface CategoryContract {
         * 获取Item
         * */
         void getCategoryItems(boolean isRefresh);
+
+
+
     }
 }
