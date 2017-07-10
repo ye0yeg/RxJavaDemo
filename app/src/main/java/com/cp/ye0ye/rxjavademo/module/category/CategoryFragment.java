@@ -53,11 +53,11 @@ public class CategoryFragment extends Fragment implements SwipeRefreshLayout.OnR
     private CategoryListAdapter mCategoryListAdapter;
     private String mCategoryName;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        mCategoryName = bundle.getString(CATEGORY_NAME);
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Bundle bundle = getArguments();
+            mCategoryName = bundle.getString(CATEGORY_NAME);
     }
 
     @Override

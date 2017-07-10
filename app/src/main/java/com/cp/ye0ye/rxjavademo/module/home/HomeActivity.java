@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private CategoryFragment resFragment;
     private HTWFragment mHtwFragment;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

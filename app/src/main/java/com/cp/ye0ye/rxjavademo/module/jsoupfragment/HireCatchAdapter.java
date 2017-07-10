@@ -15,6 +15,7 @@ import com.cp.ye0ye.rxjavademo.entity.HireResult;
 public class HireCatchAdapter extends CommonAdapter4RecyclerView<HireResult.ResultBean.DataBean> implements ListenerWithPosition.OnClickWithPositionListener<CommonHolder4RecyclerView> {
 
 
+
     public HireCatchAdapter(Context context) {
         super(context, null, R.layout.item);
     }

@@ -32,8 +32,6 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     RecyclerViewWithFooter mRecyclerViewWithFooter;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.iv_item_img)
-    AppCompatImageView mAppCompatImageView;
 
     private HireCatchAdapter mHireCatchAdapter;
     private HTWContract.Presenter mPresenter = new HTWPresenter(this);
@@ -87,8 +85,8 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void setCategoryItem(List<HireResult.ResultBean.DataBean> hireResult) {
-//        mHireCatchAdapter.mData = hireResult;
-        mHireCatchAdapter.mData.addAll(hireResult);
+        mHireCatchAdapter.mData = hireResult;
+//        mHireCatchAdapter.mData.addAll(hireResult);
         mHireCatchAdapter.notifyDataSetChanged();
     }
 

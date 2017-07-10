@@ -21,7 +21,7 @@ public abstract class CommonAdapter4RecyclerView<T> extends RecyclerView.Adapter
     public CommonAdapter4RecyclerView(Context context, List<T> data, int layoutId) {
         this.mContext = context;
         this.mData = data == null ? (List<T>) new ArrayList<>() : data;
-        this.layoutId = layoutId;
+       this.layoutId = layoutId;
     }
 
     @Override
