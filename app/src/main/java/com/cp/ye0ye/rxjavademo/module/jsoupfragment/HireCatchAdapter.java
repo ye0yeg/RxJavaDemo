@@ -12,17 +12,16 @@ import com.cp.ye0ye.rxjavademo.entity.HireResult;
 /**
  * Created by Administrator on 7/7/2017.
  */
-public class HireCatchAdapter extends CommonAdapter4RecyclerView<HireResult> implements ListenerWithPosition.OnClickWithPositionListener<CommonHolder4RecyclerView> {
+public class HireCatchAdapter extends CommonAdapter4RecyclerView<HireResult.ResultBean.DataBean> implements ListenerWithPosition.OnClickWithPositionListener<CommonHolder4RecyclerView> {
 
 
-
-    public HireCatchAdapter(final Context context) {
+    public HireCatchAdapter(Context context) {
         super(context, null, R.layout.item);
     }
 
 
     @Override
-    public void convert(final CommonHolder4RecyclerView holder, final HireResult hireResult) {
+    public void convert(CommonHolder4RecyclerView holder, HireResult.ResultBean.DataBean hireResult) {
         //设置信息
         holder.setTextViewText(R.id.tv_item_title, hireResult.getTitle() == null ? "unknown" : hireResult.getTitle());
         holder.setTextViewText(R.id.tv_item_publisher, hireResult.getCity() == null ? "unknown" : hireResult.getCity());

@@ -12,9 +12,9 @@ import java.util.List;
 public interface HTWContract {
     interface View extends BaseView {
 
-        void setCategoryItem(List<HireResult> hireResult);
+        void setCategoryItem(List<HireResult.ResultBean.DataBean> hireResult);
 
-        void addCategoryItem(List<HireResult> hireResult);
+        void addCategoryItem(List<HireResult.ResultBean.DataBean> hireResult);
 
         void getCategoryItemFail(String failMessage);
 

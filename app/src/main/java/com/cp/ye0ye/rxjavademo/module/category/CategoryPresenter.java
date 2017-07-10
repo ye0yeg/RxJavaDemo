@@ -61,11 +61,14 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                         mView.hideSwipeLoading();
                         mView.getCategoryItemFail(mView.getCategoryName() + "列表获取失败");
                     }
-
                     @Override
                     public void onNext(CategoryResult categoryResult) {
                         if (isRefresh) {
                             //categoryResult 中有一个String 和一个 集合
+                            /**
+                             * 其实其中的数据，有categoryResult中的两个元素 String ,List<result>
+                             * */
+                            System.out.println(categoryResult.results.get(0).url.toString());
                             mView.setCategoryItems(categoryResult);
                             mView.hideSwipeLoading();
                             mView.setLoading();

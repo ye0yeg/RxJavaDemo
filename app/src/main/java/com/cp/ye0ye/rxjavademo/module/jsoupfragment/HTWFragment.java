@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Administrator on 7/7/2017.
@@ -30,6 +32,8 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     RecyclerViewWithFooter mRecyclerViewWithFooter;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.iv_item_img)
+    AppCompatImageView mAppCompatImageView;
 
     private HireCatchAdapter mHireCatchAdapter;
     private HTWContract.Presenter mPresenter = new HTWPresenter(this);
@@ -82,21 +86,22 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
 
     @Override
-    public void setCategoryItem(List<HireResult> hireResult) {
-        mHireCatchAdapter.mData = hireResult;
+    public void setCategoryItem(List<HireResult.ResultBean.DataBean> hireResult) {
+//        mHireCatchAdapter.mData = hireResult;
+        mHireCatchAdapter.mData.addAll(hireResult);
         mHireCatchAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void addCategoryItem(final List<HireResult> hireResult) {
+    public void addCategoryItem(final List<HireResult.ResultBean.DataBean> hireResult) {
         int start = mHireCatchAdapter.getItemCount();
         mHireCatchAdapter.mData.addAll(hireResult);
         mHireCatchAdapter.notifyItemRangeInserted(start, hireResult.size());
     }
 
     @Override
-    public void getCategoryItemFail(final String failMessage) {
-
+    public void getCategoryItemFail(String failMessage) {
+        Toasty.error(getContext(), "获取失败").show();
     }
 
     @Override
@@ -107,11 +112,12 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void showSwipeLoading() {
-
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideSwipeLoading() {
+        mSwipeRefreshLayout.setRefreshing(false);
 
     }
 
@@ -119,4 +125,11 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     public void setLoading() {
 
     }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.unsubscribe();
+        super.onDestroy();
+    }
+
 }

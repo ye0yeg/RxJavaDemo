@@ -70,12 +70,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_item_img"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:contentDescription="@null"
-        android:gravity="center_vertical"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/image_default" />
 </LinearLayout>
