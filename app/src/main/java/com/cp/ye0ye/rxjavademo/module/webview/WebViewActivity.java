@@ -70,6 +70,7 @@ public class WebViewActivity extends SwipeBackBaseActivity implements WebViewCon
                     mAppbar.getPaddingRight(),
                     mAppbar.getPaddingBottom());
         }
+        mToolbar.setTitle("");
         closeFromActionBar();
         initWebView();
         mPresenter.subscribe();

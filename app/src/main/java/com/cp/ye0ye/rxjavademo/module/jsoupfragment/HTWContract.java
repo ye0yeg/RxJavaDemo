@@ -26,6 +26,8 @@ public interface HTWContract {
 
         void setLoading();
 
+
+
     }
 
     interface Presenter extends BasePresenter {

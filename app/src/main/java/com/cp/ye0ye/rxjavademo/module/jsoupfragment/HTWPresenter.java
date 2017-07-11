@@ -27,6 +27,7 @@ public class HTWPresenter implements HTWContract.Presenter {
     private HTWContract.View mView;
     private int mPage;
 
+
     private HireResult.ResultBean.DataBean hireResult;
 
     private List<HireResult.ResultBean.DataBean> listData = new ArrayList<>();
@@ -48,10 +49,10 @@ public class HTWPresenter implements HTWContract.Presenter {
             @Override
             public void call(final Subscriber<? super Integer> subscriber) {
                 try {
-                    if (listData != null){
+                    if (listData != null) {
                         listData.clear();
                     }
-                    Document document = JsoupNewWork.getConnect("http://xyzp.haitou.cc/").get();
+                    Document document = JsoupNewWork.getConnect("http://xyzp.haitou.cc").get();
                     Elements elements = document.select("tbody tr");
                     for (Element element :
                             elements) {
@@ -59,12 +60,14 @@ public class HTWPresenter implements HTWContract.Presenter {
                         String name = element.getElementsByClass("text-success company").text();
                         String time = element.getElementsByClass("cxxt-time").text();
                         String citi = element.getElementsByClass("text-ellipsis").text();
+                        String url = "http://xyzp.haitou.cc" + element.getElementsByTag("a").get(0).attr("href");
 
-                        System.out.println(name + time + citi);
+                        System.out.println(name + time + citi + url);
 
                         hireResult.setTitle(name);
                         hireResult.setHireTime(time);
                         hireResult.setCity(citi);
+                        hireResult.setUrl(url);
 
                         listData.add(hireResult);
                         System.out.println(listData.size());
@@ -91,6 +94,7 @@ public class HTWPresenter implements HTWContract.Presenter {
             @Override
             public void onNext(final Integer integer) {
                 mView.setCategoryItem(listData);
+                mView.hideSwipeLoading();
             }
         });
         mSubscriptions.add(subscription);

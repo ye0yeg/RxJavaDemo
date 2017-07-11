@@ -41,6 +41,16 @@ public class HireResult {
             String city;
             String publishTime;
 
+            String url;
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(final String url) {
+                this.url = url;
+            }
+
 
             public String getTitle() {
                 return title;
