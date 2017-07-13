@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private CategoryFragment referenceFragment;
     private CategoryFragment resFragment;
     private HTWFragment mHtwFragment;
+    private HTWFragment mSSFragment;
 
 
     @Override
@@ -110,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 GlobalConfig.CATEGORY_NAME_FRONT_END,
                 GlobalConfig.CATEGORY_NAME_RECOMMEND,
                 GlobalConfig.CATEGORY_NAME_RESOURCE
-                , "HTW"};
+                , "海淘网", "实习"};
         CommonViewPagerAdapter infoPagerAdapter = new CommonViewPagerAdapter(getSupportFragmentManager(), titles);
 
         // App
@@ -126,7 +127,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         // 拓展资源
         resFragment = CategoryFragment.newInstance(titles[5]);
 
-        mHtwFragment = new HTWFragment();
+        mHtwFragment = HTWFragment.newInstance(titles[6]);
+
+        mSSFragment = HTWFragment.newInstance(titles[7]);
 
 
         infoPagerAdapter.addFragment(appFragment);
@@ -136,6 +139,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         infoPagerAdapter.addFragment(referenceFragment);
         infoPagerAdapter.addFragment(resFragment);
         infoPagerAdapter.addFragment(mHtwFragment);
+        infoPagerAdapter.addFragment(mSSFragment);
 
 
         mVpCategory.setAdapter(infoPagerAdapter);

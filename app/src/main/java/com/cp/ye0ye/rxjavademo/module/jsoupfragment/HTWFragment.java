@@ -33,13 +33,29 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private HireCatchAdapter mHireCatchAdapter;
-    private HTWContract.Presenter mPresenter = new HTWPresenter(this);
+    public static final String CATEGORY_NAME = "com.cp.ye0ye.rxjavademo.module.category.CATEGORY_NAME";
+    private String mCategoryName;
+    private HTWContract.Presenter mPresenter;
+
+    public static HTWFragment newInstance(String mCategoryName) {
+        HTWFragment htwFragment = new HTWFragment();
+
+        //传递参数
+        Bundle bundle = new Bundle();
+        bundle.putString(CATEGORY_NAME, mCategoryName);
+        htwFragment.setArguments(bundle);
+        return htwFragment;
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment, container, false);
         ButterKnife.bind(this, view);
+        Bundle bundle = getArguments();
+        mCategoryName = bundle.getString(CATEGORY_NAME);
+        mPresenter = new HTWPresenter(this, mCategoryName);
         //设置刷新界面
         mSwipeRefreshLayout.setColorSchemeResources(
                 R.color.colorSwipeRefresh1,
@@ -78,6 +94,7 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void onLoadMore() {
+        mPresenter.getCategoryItems(false);
 
     }
 
@@ -85,12 +102,11 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     @Override
     public void setCategoryItem(List<HireResult.ResultBean.DataBean> hireResult) {
         mHireCatchAdapter.mData = hireResult;
-//        mHireCatchAdapter.mData.addAll(hireResult);
         mHireCatchAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void addCategoryItem(final List<HireResult.ResultBean.DataBean> hireResult) {
+    public void addCategoryItem(List<HireResult.ResultBean.DataBean> hireResult) {
         int start = mHireCatchAdapter.getItemCount();
         mHireCatchAdapter.mData.addAll(hireResult);
         mHireCatchAdapter.notifyItemRangeInserted(start, hireResult.size());
@@ -119,7 +135,7 @@ public class HTWFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     @Override
     public void setLoading() {
-
+        mRecyclerViewWithFooter.setLoading();
     }
 
 

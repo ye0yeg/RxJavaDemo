@@ -11,6 +11,8 @@ import rx.Observable;
  */
 
 public interface JsoupApi {
+
     @GET("page-{page}")
     Observable<HireResult> getHireData(@Path("page") int page);
+
 }

@@ -26,13 +26,12 @@ public interface HTWContract {
 
         void setLoading();
 
-
-
     }
 
     interface Presenter extends BasePresenter {
 
-        void getCategoryItems(boolean isRefresh);
+        void getCategoryItems(boolean isRefreshw);
+
     }
 
 }

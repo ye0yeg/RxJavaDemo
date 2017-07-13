@@ -1,13 +1,8 @@
 package com.cp.ye0ye.rxjavademo.module.jsoupfragment;
 
 import com.cp.ye0ye.rxjavademo.entity.HireResult;
-import com.cp.ye0ye.rxjavademo.network.JsoupNewWork;
+import com.cp.ye0ye.rxjavademo.network.NetWork;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,19 +21,22 @@ public class HTWPresenter implements HTWContract.Presenter {
     private CompositeSubscription mSubscriptions;
     private HTWContract.View mView;
     private int mPage;
+    private String BASE_URL = "http://xyzp.haitou.cc";
+    private String mCategory;
 
 
     private HireResult.ResultBean.DataBean hireResult;
 
     private List<HireResult.ResultBean.DataBean> listData = new ArrayList<>();
 
-    public HTWPresenter(HTWContract.View view) {
+    public HTWPresenter(HTWContract.View view, String category) {
+        mCategory = category;
         mView = view;
         mSubscriptions = new CompositeSubscription();
     }
 
     @Override
-    public void getCategoryItems(boolean isRefresh) {
+    public void getCategoryItems(final boolean isRefresh) {
         if (isRefresh) {
             mView.showSwipeLoading();
             mPage = 1;
@@ -48,34 +46,11 @@ public class HTWPresenter implements HTWContract.Presenter {
         Subscription subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
             public void call(final Subscriber<? super Integer> subscriber) {
-                try {
-                    if (listData != null) {
-                        listData.clear();
-                    }
-                    Document document = JsoupNewWork.getConnect("http://xyzp.haitou.cc").get();
-                    Elements elements = document.select("tbody tr");
-                    for (Element element :
-                            elements) {
-                        hireResult = new HireResult.ResultBean.DataBean();
-                        String name = element.getElementsByClass("text-success company").text();
-                        String time = element.getElementsByClass("cxxt-time").text();
-                        String citi = element.getElementsByClass("text-ellipsis").text();
-                        String url = "http://xyzp.haitou.cc" + element.getElementsByTag("a").get(0).attr("href");
-
-                        System.out.println(name + time + citi + url);
-
-                        hireResult.setTitle(name);
-                        hireResult.setHireTime(time);
-                        hireResult.setCity(citi);
-                        hireResult.setUrl(url);
-
-                        listData.add(hireResult);
-                        System.out.println(listData.size());
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("IOException::失败和失败原因：" + e.toString());
+                if (mCategory.equals("海淘网")) {
+                    listData = NetWork.getHireData(mPage);
+                }
+                if (mCategory.equals("实习")) {
+                    listData = NetWork.getInter(mPage);
                 }
                 subscriber.onNext(1);
                 subscriber.onCompleted();
@@ -93,8 +68,13 @@ public class HTWPresenter implements HTWContract.Presenter {
 
             @Override
             public void onNext(final Integer integer) {
-                mView.setCategoryItem(listData);
-                mView.hideSwipeLoading();
+                if (isRefresh) {
+                    mView.setCategoryItem(listData);
+                    mView.hideSwipeLoading();
+                    mView.setLoading();
+                } else {
+                    mView.addCategoryItem(listData);
+                }
             }
         });
         mSubscriptions.add(subscription);

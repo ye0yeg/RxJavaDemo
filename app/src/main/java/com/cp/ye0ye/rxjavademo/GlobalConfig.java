@@ -16,4 +16,6 @@ public class GlobalConfig {
     public final static String CATEGORY_NAME_RESOURCE = "拓展资源";
 
     public final static String PICASSO_TAG_THUMBNAILS_CATEGORY_LIST_ITEM = "Thumbnails_categoryList_item";
+
+    public static final int JSOUP_HAITOUNET = 1001;
 }

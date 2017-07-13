@@ -26,7 +26,6 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             >
-
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
